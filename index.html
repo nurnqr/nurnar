@@ -9,8 +9,6 @@
     body { font-family: Arial, sans-serif; background: #fff; color: #2d2d2d; }
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; display: block; }
-
-    /* NAV */
     nav {
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 40px; background: #fff; border-bottom: 1px solid #eee;
@@ -19,8 +17,6 @@
     nav img.logo { height: 48px; width: auto; object-fit: contain; }
     .nav-email { color: #2d2d2d; font-size: 15px; font-weight: 500; transition: color 0.2s; }
     .nav-email:hover { color: #e53e2f; }
-
-    /* HERO */
     .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; }
     .hero-text { padding: 60px 48px; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
     .hero-text h1 { font-size: clamp(28px,4vw,52px); font-weight: 900; line-height: 1.1; text-transform: uppercase; }
@@ -33,27 +29,19 @@
     .btn-contact:hover { background: #444; }
     .hero-image { overflow: hidden; }
     .hero-image img { width: 100%; height: 100%; object-fit: cover; }
-
-    /* SECTIONS */
     .section { padding: 60px 40px; }
     .section-inner { max-width: 1024px; margin: 0 auto; }
     .section-title { font-size: clamp(22px,4vw,36px); font-weight: 900; text-transform: uppercase; margin-bottom: 40px; text-align: center; }
-
-    /* PARTNERS */
     .partners-section { background: #f5f5f5; padding: 40px; }
     .partners-inner { max-width: 1024px; margin: 0 auto; }
     .partners-grid { display: flex; gap: 32px; align-items: center; justify-content: center; flex-wrap: wrap; }
     .partners-grid img { height: 60px; width: auto; object-fit: contain; }
-
-    /* PRODUCTS */
     .products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
     .product-card { background: #f5f5f5; display: flex; flex-direction: column; }
     .product-card > img { width: 100%; height: 220px; object-fit: cover; }
     .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
     .product-card h3 { font-size: 15px; font-weight: 700; line-height: 1.3; }
     .product-card p { font-size: 14px; color: #555; line-height: 1.6; flex: 1; }
-
-    /* STOCK BADGE */
     .stock-badge {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 13px; font-weight: 700; padding: 5px 10px;
@@ -62,8 +50,6 @@
     .stock-badge.in-stock { background: #e6f9f0; color: #0a7d4a; }
     .stock-badge.low-stock { background: #fff4e0; color: #c47a00; }
     .stock-badge.out-stock { background: #fde8e8; color: #c0392b; }
-
-    /* ORDER BUTTON */
     .btn-order {
       display: block; width: 100%; padding: 12px; margin-top: 4px;
       background: #e8b800; color: #111; font-size: 15px; font-weight: 700;
@@ -71,15 +57,11 @@
     }
     .btn-order:hover { background: #ffd000; }
     .btn-order:disabled { background: #ccc; color: #888; cursor: not-allowed; }
-
-    /* REVIEWS */
     .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
     .review-card { background: #f5f5f5; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
     .review-card p { font-size: 15px; font-weight: 600; line-height: 1.6; }
     .review-author { font-size: 14px; font-weight: 600; color: #444; }
     .review-card img.stars { height: 20px; width: auto; }
-
-    /* ORDER MODAL */
     .overlay {
       display: none; position: fixed; inset: 0;
       background: rgba(0,0,0,0.6); z-index: 9999;
@@ -98,12 +80,12 @@
     .modal h2 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
     .modal-sub { font-size: 14px; color: #666; font-weight: 600; margin-bottom: 20px; }
     .modal label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; color: #333; }
-    .modal input, .modal select {
+    .modal input {
       width: 100%; padding: 10px 12px; border: 1.5px solid #ddd;
       border-radius: 6px; font-size: 15px; margin-bottom: 14px;
       outline: none; transition: border-color 0.2s;
     }
-    .modal input:focus, .modal select:focus { border-color: #e8b800; }
+    .modal input:focus { border-color: #e8b800; }
     .btn-primary {
       width: 100%; padding: 13px; background: #e8b800; color: #111;
       font-size: 16px; font-weight: 800; border: none; border-radius: 6px;
@@ -118,17 +100,13 @@
     .order-success { display: none; text-align: center; padding: 12px 0; }
     .order-success .check { font-size: 52px; }
     .order-success p { font-size: 16px; color: #333; margin-top: 10px; font-weight: 600; }
-
-    /* ADMIN PANEL */
     #admin-btn {
       position: fixed; bottom: 20px; right: 20px;
       background: #2d2d2d; color: #fff; border: none;
       padding: 10px 16px; border-radius: 8px; font-size: 13px;
-      cursor: pointer; z-index: 500; opacity: 0.6;
-      transition: opacity 0.2s;
+      cursor: pointer; z-index: 500; opacity: 0.6; transition: opacity 0.2s;
     }
     #admin-btn:hover { opacity: 1; }
-
     .admin-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
     .admin-row {
       display: grid; grid-template-columns: 1fr auto auto;
@@ -148,9 +126,6 @@
       font-weight: 700; cursor: pointer; white-space: nowrap;
     }
     .btn-save-row:hover { background: #ffd000; }
-    .admin-saved { color: #0a7d4a; font-size: 12px; font-weight: 700; }
-
-    /* RESPONSIVE */
     @media (max-width: 767px) {
       nav { padding: 14px 20px; }
       .hero { grid-template-columns: 1fr; }
@@ -169,13 +144,11 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a href="#"><img class="logo" src="assets/logo.png" alt="NWHEEL" /></a>
-    <a href="/cdn-cgi/l/email-protection#e48a91968a8596ca858a91859686818fd4d4a48389858d88ca878b89" class="nav-email"><span class="__cf_email__" data-cfemail="2749525549465509464952465545424c171767404a464e4b0944484a">[email&#160;protected]</span></a>
+    <a href="mailto:nwheel@mail.com" class="nav-email">nwheel@mail.com</a>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-text">
       <h1>NWHEEL — сеть магазинов</h1>
@@ -187,7 +160,6 @@
     </div>
   </section>
 
-  <!-- PARTNERS -->
   <section class="partners-section">
     <div class="partners-inner">
       <h2 class="section-title" style="margin-bottom:28px;">НАШИ ПАРТНЕРЫ</h2>
@@ -200,17 +172,15 @@
     </div>
   </section>
 
-  <!-- PRODUCTS -->
   <section class="section" style="background:#fff;">
     <div class="section-inner">
       <h2 class="section-title">СПИСОК ТОВАРА В НАЛИЧИИ</h2>
       <div class="products-grid" id="products-grid">
-        <!-- карточки рендерятся JS -->
+        <div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;font-size:16px;">Загрузка товаров...</div>
       </div>
     </div>
   </section>
 
-  <!-- REVIEWS -->
   <section class="section" style="background:#f5f5f5;">
     <div class="section-inner">
       <h2 class="section-title">Наши отзывы</h2>
@@ -242,7 +212,7 @@
 
   <!-- ORDER MODAL -->
   <div class="overlay" id="order-overlay">
-    <div class="modal" id="order-modal">
+    <div class="modal">
       <button class="btn-close" onclick="closeOrder()">✕</button>
       <h2>Оформить заказ</h2>
       <div class="modal-sub" id="order-product-name"></div>
@@ -265,7 +235,7 @@
   <!-- ADMIN LOGIN MODAL -->
   <div class="overlay" id="admin-login-overlay">
     <div class="modal" style="max-width:340px;">
-      <button class="btn-close" onclick="closeAdmin()">✕</button>
+      <button class="btn-close" onclick="closeAdminLogin()">✕</button>
       <h2>🔐 Вход</h2>
       <div class="modal-sub">Введите пароль администратора</div>
       <label>Пароль</label>
@@ -278,24 +248,21 @@
   <!-- ADMIN PANEL MODAL -->
   <div class="overlay" id="admin-panel-overlay">
     <div class="modal" style="max-width:520px;">
-      <button class="btn-close" onclick="document.getElementById('admin-panel-overlay').classList.remove('active');document.body.style.overflow='';">✕</button>
+      <button class="btn-close" onclick="closeAdminPanel()">✕</button>
       <h2>⚙️ Управление остатками</h2>
-      <div class="modal-sub">Изменения сохраняются и сразу отображаются на сайте</div>
+      <div class="modal-sub">Изменения сохраняются в облаке — видны на всех устройствах</div>
       <div class="admin-grid" id="admin-grid"></div>
       <button class="btn-primary" style="margin-top:20px;" onclick="saveAllStock()">💾 Сохранить всё</button>
     </div>
   </div>
 
-  <!-- ADMIN BUTTON -->
   <button id="admin-btn" onclick="openAdminLogin()">⚙️ Админ</button>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // ─── CONFIG ───────────────────────────────────────────────
+  <script>
     var TG_TOKEN   = '8510114565:AAFhHSk-lQFJDJ_2brjOysyRt7q98UbgVjo';
     var TG_CHAT    = '1035065842';
-    var ADMIN_PASS = 'nwheel2024'; // ← Поменяй пароль здесь
+    var ADMIN_PASS = 'nwheel2024';
 
-    // ─── ДАННЫЕ ТОВАРОВ ────────────────────────────────────────
     var PRODUCTS = [
       {
         id: 'michelin',
@@ -323,55 +290,49 @@
       }
     ];
 
-    // ─── SUPABASE CONFIG ───────────────────────────────────────
-    var SUPABASE_URL  = 'https://iduijorgfzhidfxiknaw.supabase.co';
-    var SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkdWlqb3JnZnpoaWRmeGlrbmF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MDg0MjIsImV4cCI6MjA4ODM4NDQyMn0.1IQUY9TB0dKybWMpfs--GJgvYI_hlNVIn8MX1fndZt0';
+    var SUPABASE_URL = 'https://iduijorgfzhidfxiknaw.supabase.co';
+    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkdWlqb3JnZnpoaWRmeGlrbmF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MDg0MjIsImV4cCI6MjA4ODM4NDQyMn0.1IQUY9TB0dKybWMpfs--GJgvYI_hlNVIn8MX1fndZt0';
 
     var _stockCache = null;
 
     async function loadStock() {
-      if (_stockCache) return _stockCache;
       try {
         var resp = await fetch(SUPABASE_URL + '/rest/v1/stock?select=id,quantity', {
           headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
         });
         var rows = await resp.json();
         var stock = {};
-        rows.forEach(function(r) { stock[r.id] = r.quantity; });
+        if (Array.isArray(rows)) rows.forEach(function(r){ stock[r.id] = r.quantity; });
         _stockCache = stock;
         return stock;
-      } catch(e) { return {}; }
+      } catch(e) {
+        return _stockCache || {};
+      }
     }
 
-    async function saveStock(stock) {
-      _stockCache = stock;
-      var rows = Object.keys(stock).map(function(id) {
-        return { id: id, quantity: stock[id] };
-      });
-      await fetch(SUPABASE_URL + '/rest/v1/stock', {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'resolution=merge-duplicates'
-        },
-        body: JSON.stringify(rows)
-      });
-    }
-
-    async function getQty(id) {
-      var stock = await loadStock();
-      return (stock[id] !== undefined) ? stock[id] : 10;
+    async function saveStock(stockObj) {
+      var rows = Object.keys(stockObj).map(function(id){ return { id: id, quantity: stockObj[id] }; });
+      try {
+        await fetch(SUPABASE_URL + '/rest/v1/stock', {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates'
+          },
+          body: JSON.stringify(rows)
+        });
+        _stockCache = stockObj;
+      } catch(e) {
+        alert('Ошибка сохранения. Проверьте соединение.');
+      }
     }
 
     function stockBadge(qty) {
-      if (qty <= 0)  return '<span class="stock-badge out-stock">❌ Нет в наличии</span>';
-      if (qty <= 3)  return '<span class="stock-badge low-stock">⚠️ Мало: ' + qty + ' шт</span>';
+      if (qty <= 0) return '<span class="stock-badge out-stock">❌ Нет в наличии</span>';
+      if (qty <= 3) return '<span class="stock-badge low-stock">⚠️ Мало: ' + qty + ' шт</span>';
       return '<span class="stock-badge in-stock">✅ В наличии: ' + qty + ' шт</span>';
     }
 
-    // ─── РЕНДЕР КАРТОЧЕК ───────────────────────────────────────
     async function renderProducts() {
       var stock = await loadStock();
       var grid = document.getElementById('products-grid');
@@ -386,17 +347,16 @@
             '<p>' + p.info + '</p>' +
             stockBadge(qty) +
             '<button class="btn-order" ' + disabled + ' onclick="openOrder(\'' + p.id + '\')">' + btnText + '</button>' +
-          '</div>' +
-        '</div>';
+          '</div></div>';
       }).join('');
     }
 
-    // ─── ЗАКАЗ ─────────────────────────────────────────────────
     var currentProductId = '';
 
     async function openOrder(id) {
       var p = PRODUCTS.find(function(x){ return x.id === id; });
-      var qty = await getQty(id);
+      var stock = await loadStock();
+      var qty = (stock[id] !== undefined) ? stock[id] : 10;
       if (qty <= 0) return;
       currentProductId = id;
       document.getElementById('order-product-name').textContent = '🛞 ' + p.name;
@@ -406,6 +366,8 @@
       document.getElementById('inp-name').value = '';
       document.getElementById('inp-phone').value = '';
       document.getElementById('inp-qty').value = '1';
+      document.getElementById('btn-submit').textContent = '📤 Отправить заказ';
+      document.getElementById('btn-submit').disabled = false;
       document.getElementById('order-overlay').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
@@ -415,36 +377,29 @@
       document.body.style.overflow = '';
     }
 
-    document.getElementById('order-overlay').addEventListener('click', function(e) {
-      if (e.target === this) closeOrder();
-    });
+    document.getElementById('order-overlay').addEventListener('click', function(e){ if(e.target===this) closeOrder(); });
 
     async function submitOrder() {
       var p     = PRODUCTS.find(function(x){ return x.id === currentProductId; });
       var name  = document.getElementById('inp-name').value.trim();
       var phone = document.getElementById('inp-phone').value.trim();
       var qty   = parseInt(document.getElementById('inp-qty').value);
-      var stock = await getQty(currentProductId);
+      var stock = await loadStock();
+      var avail = (stock[currentProductId] !== undefined) ? stock[currentProductId] : 10;
 
-      if (!name)         { alert('Пожалуйста, введите ваше имя'); return; }
-      if (!phone)        { alert('Пожалуйста, введите номер телефона'); return; }
-      if (qty > stock)   { alert('Доступно только ' + stock + ' шт'); return; }
+      if (!name)  { alert('Пожалуйста, введите ваше имя'); return; }
+      if (!phone) { alert('Пожалуйста, введите номер телефона'); return; }
+      if (isNaN(qty) || qty < 1) { alert('Введите корректное количество'); return; }
+      if (qty > avail) { alert('Доступно только ' + avail + ' шт'); return; }
 
-      var text =
-        '🚗 Новый заказ!\n\n' +
-        '🛞 Товар: ' + p.name + '\n' +
-        '📦 Количество: ' + qty + ' шт\n' +
-        '👤 Имя: ' + name + '\n' +
-        '📞 Телефон: ' + phone;
+      var text = '🚗 Новый заказ!\n\n🛞 Товар: ' + p.name + '\n📦 Количество: ' + qty + ' шт\n👤 Имя: ' + name + '\n📞 Телефон: ' + phone;
 
       var btn = document.getElementById('btn-submit');
-      btn.textContent = 'Отправка...';
-      btn.disabled = true;
+      btn.textContent = 'Отправка...'; btn.disabled = true;
 
       try {
         var resp = await fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ chat_id: TG_CHAT, text: text })
         });
         var data = await resp.json();
@@ -454,16 +409,14 @@
           setTimeout(closeOrder, 3000);
         } else {
           alert('Ошибка: ' + (data.description || 'неизвестная ошибка'));
+          btn.textContent = '📤 Отправить заказ'; btn.disabled = false;
         }
       } catch(e) {
         alert('Ошибка сети. Попробуйте ещё раз.');
+        btn.textContent = '📤 Отправить заказ'; btn.disabled = false;
       }
-
-      btn.textContent = '📤 Отправить заказ';
-      btn.disabled = false;
     }
 
-    // ─── АДМИН ─────────────────────────────────────────────────
     function openAdminLogin() {
       document.getElementById('inp-admin-pass').value = '';
       document.getElementById('admin-pass-error').style.display = 'none';
@@ -472,15 +425,19 @@
       setTimeout(function(){ document.getElementById('inp-admin-pass').focus(); }, 100);
     }
 
-    function closeAdmin() {
+    function closeAdminLogin() {
       document.getElementById('admin-login-overlay').classList.remove('active');
       document.body.style.overflow = '';
     }
 
+    function closeAdminPanel() {
+      document.getElementById('admin-panel-overlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
     function checkAdminPass() {
-      var pass = document.getElementById('inp-admin-pass').value;
-      if (pass === ADMIN_PASS) {
-        document.getElementById('admin-login-overlay').classList.remove('active');
+      if (document.getElementById('inp-admin-pass').value === ADMIN_PASS) {
+        closeAdminLogin();
         openAdminPanel();
       } else {
         document.getElementById('admin-pass-error').style.display = 'block';
@@ -490,11 +447,9 @@
     }
 
     async function openAdminPanel() {
+      _stockCache = null;
       var stock = await loadStock();
-      _stockCache = null; // сбросить кэш чтобы получить свежие данные
-      var grid  = document.getElementById('admin-grid');
-
-      grid.innerHTML = PRODUCTS.map(function(p) {
+      document.getElementById('admin-grid').innerHTML = PRODUCTS.map(function(p) {
         var qty = (stock[p.id] !== undefined) ? stock[p.id] : 10;
         return '<div class="admin-row" id="admin-row-' + p.id + '">' +
           '<div class="admin-row-name">' + p.name + '</div>' +
@@ -502,29 +457,19 @@
           '<button class="btn-save-row" onclick="saveOneStock(\'' + p.id + '\')">Сохранить</button>' +
         '</div>';
       }).join('');
-
       document.getElementById('admin-panel-overlay').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
     async function saveOneStock(id) {
-      var val   = parseInt(document.getElementById('admin-qty-' + id).value) || 0;
+      var val = parseInt(document.getElementById('admin-qty-' + id).value) || 0;
       var stock = await loadStock();
       stock[id] = val;
-      _stockCache = stock;
       await saveStock(stock);
       await renderProducts();
-
-      // Показать "✓ Сохранено"
       var btn = document.querySelector('#admin-row-' + id + ' .btn-save-row');
-      btn.textContent = '✓ Сохранено';
-      btn.style.background = '#0a7d4a';
-      btn.style.color = '#fff';
-      setTimeout(function(){
-        btn.textContent = 'Сохранить';
-        btn.style.background = '';
-        btn.style.color = '';
-      }, 1500);
+      btn.textContent = '✓ Сохранено'; btn.style.background = '#0a7d4a'; btn.style.color = '#fff';
+      setTimeout(function(){ btn.textContent = 'Сохранить'; btn.style.background = ''; btn.style.color = ''; }, 1500);
     }
 
     async function saveAllStock() {
@@ -533,15 +478,14 @@
         var input = document.getElementById('admin-qty-' + p.id);
         if (input) stock[p.id] = parseInt(input.value) || 0;
       });
-      _stockCache = stock;
       await saveStock(stock);
       await renderProducts();
-
       var btn = document.querySelector('#admin-panel-overlay .btn-primary');
-      btn.textContent = '✓ Всё сохранено!';
-      btn.style.background = '#0a7d4a';
-      btn.style.color = '#fff';
-      setTimeout(function(){
-        btn.textContent = '💾 Сохранить всё';
-        btn.style.background = '';
-        btn.style.
+      btn.textContent = '✓ Всё сохранено!'; btn.style.background = '#0a7d4a'; btn.style.color = '#fff';
+      setTimeout(function(){ btn.textContent = '💾 Сохранить всё'; btn.style.background = ''; btn.style.color = ''; }, 2000);
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
