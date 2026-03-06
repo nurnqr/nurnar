@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NWHEEL — сеть магазинов шин</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #fff; color: #2d2d2d; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* NAV */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px; background: #fff; border-bottom: 1px solid #eee;
+      position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 12px;
+    }
+    nav img.logo { height: 48px; width: auto; object-fit: contain; }
+    .nav-email { color: #2d2d2d; font-size: 15px; font-weight: 500; transition: color 0.2s; }
+    .nav-email:hover { color: #e53e2f; }
+
+    /* HERO */
+    .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; }
+    .hero-text { padding: 60px 48px; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
+    .hero-text h1 { font-size: clamp(28px,4vw,52px); font-weight: 900; line-height: 1.1; text-transform: uppercase; }
+    .hero-text p { font-size: 16px; color: #555; line-height: 1.7; }
+    .btn-contact {
+      display: inline-block; background: #2d2d2d; color: #fff; font-weight: 700;
+      padding: 14px 32px; font-size: 15px; width: fit-content; border: 1px solid #2d2d2d;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-contact:hover { background: #444; }
+    .hero-image { overflow: hidden; }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* SECTIONS */
+    .section { padding: 60px 40px; }
+    .section-inner { max-width: 1024px; margin: 0 auto; }
+    .section-title { font-size: clamp(22px,4vw,36px); font-weight: 900; text-transform: uppercase; margin-bottom: 40px; text-align: center; }
+
+    /* PARTNERS */
+    .partners-section { background: #f5f5f5; padding: 40px; }
+    .partners-inner { max-width: 1024px; margin: 0 auto; }
+    .partners-grid { display: flex; gap: 32px; align-items: center; justify-content: center; flex-wrap: wrap; }
+    .partners-grid img { height: 60px; width: auto; object-fit: contain; }
+
+    /* PRODUCTS */
+    .products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .product-card { background: #f5f5f5; display: flex; flex-direction: column; }
+    .product-card > img { width: 100%; height: 220px; object-fit: cover; }
+    .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .product-card h3 { font-size: 15px; font-weight: 700; line-height: 1.3; }
+    .product-card p { font-size: 14px; color: #555; line-height: 1.6; flex: 1; }
+
+    /* STOCK BADGE */
+    .stock-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 700; padding: 5px 10px;
+      border-radius: 20px; width: fit-content;
+    }
+    .stock-badge.in-stock { background: #e6f9f0; color: #0a7d4a; }
+    .stock-badge.low-stock { background: #fff4e0; color: #c47a00; }
+    .stock-badge.out-stock { background: #fde8e8; color: #c0392b; }
+
+    /* ORDER BUTTON */
+    .btn-order {
+      display: block; width: 100%; padding: 12px; margin-top: 4px;
+      background: #e8b800; color: #111; font-size: 15px; font-weight: 700;
+      border: none; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-order:hover { background: #ffd000; }
+    .btn-order:disabled { background: #ccc; color: #888; cursor: not-allowed; }
+
+    /* REVIEWS */
+    .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .review-card { background: #f5f5f5; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .review-card p { font-size: 15px; font-weight: 600; line-height: 1.6; }
+    .review-author { font-size: 14px; font-weight: 600; color: #444; }
+    .review-card img.stars { height: 20px; width: auto; }
+
+    /* ORDER MODAL */
+    .overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); z-index: 9999;
+      align-items: center; justify-content: center;
+    }
+    .overlay.active { display: flex; }
+    .modal {
+      background: #fff; border-radius: 12px; padding: 36px 32px 28px;
+      width: 100%; max-width: 440px; margin: 16px; position: relative;
+      animation: popIn 0.22s ease; max-height: 90vh; overflow-y: auto;
+    }
+    @keyframes popIn {
+      from { opacity:0; transform:scale(0.92) translateY(-12px); }
+      to   { opacity:1; transform:scale(1) translateY(0); }
+    }
+    .modal h2 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .modal-sub { font-size: 14px; color: #666; font-weight: 600; margin-bottom: 20px; }
+    .modal label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; color: #333; }
+    .modal input, .modal select {
+      width: 100%; padding: 10px 12px; border: 1.5px solid #ddd;
+      border-radius: 6px; font-size: 15px; margin-bottom: 14px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .modal input:focus, .modal select:focus { border-color: #e8b800; }
+    .btn-primary {
+      width: 100%; padding: 13px; background: #e8b800; color: #111;
+      font-size: 16px; font-weight: 800; border: none; border-radius: 6px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #ffd000; }
+    .btn-close {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; font-size: 24px;
+      cursor: pointer; color: #999; line-height: 1;
+    }
+    .order-success { display: none; text-align: center; padding: 12px 0; }
+    .order-success .check { font-size: 52px; }
+    .order-success p { font-size: 16px; color: #333; margin-top: 10px; font-weight: 600; }
+
+    /* ADMIN PANEL */
+    #admin-btn {
+      position: fixed; bottom: 20px; right: 20px;
+      background: #2d2d2d; color: #fff; border: none;
+      padding: 10px 16px; border-radius: 8px; font-size: 13px;
+      cursor: pointer; z-index: 500; opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    #admin-btn:hover { opacity: 1; }
+
+    .admin-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+    .admin-row {
+      display: grid; grid-template-columns: 1fr auto auto;
+      gap: 10px; align-items: center; padding: 10px 12px;
+      background: #f8f8f8; border-radius: 8px; border: 1px solid #eee;
+    }
+    .admin-row-name { font-size: 13px; font-weight: 700; line-height: 1.3; }
+    .admin-qty-input {
+      width: 70px; padding: 7px 8px; border: 1.5px solid #ddd;
+      border-radius: 6px; font-size: 14px; font-weight: 700;
+      text-align: center; outline: none;
+    }
+    .admin-qty-input:focus { border-color: #e8b800; }
+    .btn-save-row {
+      padding: 7px 14px; background: #e8b800; color: #111;
+      border: none; border-radius: 6px; font-size: 13px;
+      font-weight: 700; cursor: pointer; white-space: nowrap;
+    }
+    .btn-save-row:hover { background: #ffd000; }
+    .admin-saved { color: #0a7d4a; font-size: 12px; font-weight: 700; }
+
+    /* RESPONSIVE */
+    @media (max-width: 767px) {
+      nav { padding: 14px 20px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-image { display: none; }
+      .hero-text { padding: 40px 24px; }
+      .section { padding: 40px 20px; }
+      .partners-section { padding: 30px 20px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .reviews-grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .products-grid { grid-template-columns: 1fr 1fr; }
+      .reviews-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#"><img class="logo" src="assets/logo.png" alt="NWHEEL" /></a>
+    <a href="mailto:nurnar.anuarbek00@gmail.com" class="nav-email">nurnar.anuarbek00@gmail.com</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>NWHEEL — сеть магазинов</h1>
+      <p>Это надежный магазин шин, где качество, безопасность и доступные цены идут в одном направлении. Мы предлагаем широкий выбор летних, зимних и всесезонных шин для легковых автомобилей и кроссоверов.</p>
+      <a href="tel:+77081191941" class="btn-contact">Contact</a>
+    </div>
+    <div class="hero-image">
+      <img src="assets/hero.jpeg" alt="NWHEEL шины" />
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="partners-section">
+    <div class="partners-inner">
+      <h2 class="section-title" style="margin-bottom:28px;">НАШИ ПАРТНЕРЫ</h2>
+      <div class="partners-grid">
+        <img src="assets/partner1.png" alt="Nokian" />
+        <img src="assets/partner2.png" alt="Continental" />
+        <img src="assets/partner3.jpg" alt="Bridgestone" />
+        <img src="assets/partner4.jpg" alt="Michelin" />
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="section" style="background:#fff;">
+    <div class="section-inner">
+      <h2 class="section-title">СПИСОК ТОВАРА В НАЛИЧИИ</h2>
+      <div class="products-grid" id="products-grid">
+        <!-- карточки рендерятся JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section" style="background:#f5f5f5;">
+    <div class="section-inner">
+      <h2 class="section-title">Наши отзывы</h2>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <p>"Унады 5 жулдыз беремын, доставкасы бесплатный екен куантты."</p>
+          <div>
+            <img class="stars" src="assets/stars.svg" alt="5 звёзд" />
+            <div class="review-author" style="margin-top:8px;">Диханбаев Нурбол</div>
+          </div>
+        </div>
+        <div class="review-card">
+          <p>"Достойный магазин екен сразу зимний летнийде алып алдым 10/10 бердым."</p>
+          <div>
+            <img class="stars" src="assets/stars.svg" alt="5 звёзд" />
+            <div class="review-author" style="margin-top:8px;">Рахат Касым</div>
+          </div>
+        </div>
+        <div class="review-card">
+          <p>"Соз жок, Одни эмоций 2кунде акелды товарда дым минус жок."</p>
+          <div>
+            <img class="stars" src="assets/stars.svg" alt="5 звёзд" />
+            <div class="review-author" style="margin-top:8px;">Сакенов Ералы</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER MODAL -->
+  <div class="overlay" id="order-overlay">
+    <div class="modal" id="order-modal">
+      <button class="btn-close" onclick="closeOrder()">✕</button>
+      <h2>Оформить заказ</h2>
+      <div class="modal-sub" id="order-product-name"></div>
+      <div id="order-form">
+        <label>Ваше имя</label>
+        <input type="text" id="inp-name" placeholder="Например: Нурлан" />
+        <label>Номер телефона</label>
+        <input type="tel" id="inp-phone" placeholder="+7 (___) ___-__-__" />
+        <label>Количество (шт)</label>
+        <input type="number" id="inp-qty" value="1" min="1" />
+        <button class="btn-primary" id="btn-submit" onclick="submitOrder()">📤 Отправить заказ</button>
+      </div>
+      <div class="order-success" id="order-success">
+        <div class="check">✅</div>
+        <p>Заказ отправлен!<br>Мы свяжемся с вами в ближайшее время.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN LOGIN MODAL -->
+  <div class="overlay" id="admin-login-overlay">
+    <div class="modal" style="max-width:340px;">
+      <button class="btn-close" onclick="closeAdmin()">✕</button>
+      <h2>🔐 Вход</h2>
+      <div class="modal-sub">Введите пароль администратора</div>
+      <label>Пароль</label>
+      <input type="password" id="inp-admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkAdminPass()" />
+      <button class="btn-primary" onclick="checkAdminPass()">Войти</button>
+      <div id="admin-pass-error" style="color:#c0392b;font-size:13px;margin-top:8px;display:none;">Неверный пароль</div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL MODAL -->
+  <div class="overlay" id="admin-panel-overlay">
+    <div class="modal" style="max-width:520px;">
+      <button class="btn-close" onclick="document.getElementById('admin-panel-overlay').classList.remove('active');document.body.style.overflow='';">✕</button>
+      <h2>⚙️ Управление остатками</h2>
+      <div class="modal-sub">Изменения сохраняются и сразу отображаются на сайте</div>
+      <div class="admin-grid" id="admin-grid"></div>
+      <button class="btn-primary" style="margin-top:20px;" onclick="saveAllStock()">💾 Сохранить всё</button>
+    </div>
+  </div>
+
+  <!-- ADMIN BUTTON -->
+  <button id="admin-btn" onclick="openAdminLogin()">⚙️ Админ</button>
+
+  <script>
+    // ─── CONFIG ───────────────────────────────────────────────
+    var TG_TOKEN   = '8510114565:AAFhHSk-lQFJDJ_2brjOysyRt7q98UbgVjo';
+    var TG_CHAT    = '1035065842';
+    var ADMIN_PASS = 'nwheel2024'; // ← Поменяй пароль здесь
+
+    // ─── ДАННЫЕ ТОВАРОВ ────────────────────────────────────────
+    var PRODUCTS = [
+      {
+        id: 'michelin',
+        name: 'Michelin Pilot Sport 4',
+        img: 'assets/tire1.jpeg',
+        info: '<b>Сезон:</b> Летние<br><b>Размер:</b> 225/45 R17<br><b>Цена:</b> 156 000 ₸ / шт<br><b>Описание:</b> Спортивные шины с отличным сцеплением на сухой и мокрой дороге, тихие, подходят для легковых автомобилей.'
+      },
+      {
+        id: 'continental',
+        name: 'Continental 225/45 R17 – PremiumContact',
+        img: 'assets/tire2.jpg',
+        info: '<b>Цена:</b> ~72 400 ₸ / шт<br><b>Размер:</b> 225/45 R17<br><b>Сезон:</b> Летние<br><b>Описание:</b> Высококачественные летние шины с отличным сцеплением, комфортным уровнем шума и долговечностью.'
+      },
+      {
+        id: 'bridgestone',
+        name: 'Bridgestone 225/45 R17 – Blizzak Ice',
+        img: 'assets/tire3.jpg',
+        info: '<b>Цена:</b> ~85 400 ₸ / шт<br><b>Размер:</b> 225/45 R17<br><b>Сезон:</b> Зимние<br><b>Описание:</b> Зимние нешипованные шины с хорошим сцеплением на снегу и льду. Тихие, уверенно держат дорогу.'
+      },
+      {
+        id: 'nokian',
+        name: 'Nokian WR Snowproof 225/45 R17',
+        img: 'assets/tire4.webp',
+        info: '<b>Цена:</b> ~101 800 ₸ / шт<br><b>Размер:</b> 225/45 R17<br><b>Сезон:</b> Зимние<br><b>Описание:</b> Зимние шины с отличной устойчивостью на снегу и мокрой дороге. Надёжная резина для холодного сезона.'
+      }
+    ];
+
+    // ─── ОСТАТКИ: читаем из localStorage или дефолт ────────────
+    function loadStock() {
+      try {
+        var s = localStorage.getItem('nwheel_stock');
+        return s ? JSON.parse(s) : {};
+      } catch(e) { return {}; }
+    }
+
+    function saveStock(stock) {
+      localStorage.setItem('nwheel_stock', JSON.stringify(stock));
+    }
+
+    function getQty(id) {
+      var stock = loadStock();
+      return (stock[id] !== undefined) ? stock[id] : 10; // дефолт 10 шт
+    }
+
+    function stockBadge(qty) {
+      if (qty <= 0)  return '<span class="stock-badge out-stock">❌ Нет в наличии</span>';
+      if (qty <= 3)  return '<span class="stock-badge low-stock">⚠️ Мало: ' + qty + ' шт</span>';
+      return '<span class="stock-badge in-stock">✅ В наличии: ' + qty + ' шт</span>';
+    }
+
+    // ─── РЕНДЕР КАРТОЧЕК ───────────────────────────────────────
+    function renderProducts() {
+      var grid = document.getElementById('products-grid');
+      grid.innerHTML = PRODUCTS.map(function(p) {
+        var qty = getQty(p.id);
+        var disabled = qty <= 0 ? 'disabled' : '';
+        var btnText  = qty <= 0 ? '🚫 Нет в наличии' : '🛒 Заказать';
+        return '<div class="product-card">' +
+          '<img src="' + p.img + '" alt="' + p.name + '" />' +
+          '<div class="card-body">' +
+            '<h3>' + p.name + '</h3>' +
+            '<p>' + p.info + '</p>' +
+            stockBadge(qty) +
+            '<button class="btn-order" ' + disabled + ' onclick="openOrder(\'' + p.id + '\')">' + btnText + '</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    // ─── ЗАКАЗ ─────────────────────────────────────────────────
+    var currentProductId = '';
+
+    function openOrder(id) {
+      var p = PRODUCTS.find(function(x){ return x.id === id; });
+      var qty = getQty(id);
+      if (qty <= 0) return;
+      currentProductId = id;
+      document.getElementById('order-product-name').textContent = '🛞 ' + p.name;
+      document.getElementById('inp-qty').max = qty;
+      document.getElementById('order-form').style.display = '';
+      document.getElementById('order-success').style.display = 'none';
+      document.getElementById('inp-name').value = '';
+      document.getElementById('inp-phone').value = '';
+      document.getElementById('inp-qty').value = '1';
+      document.getElementById('order-overlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeOrder() {
+      document.getElementById('order-overlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('order-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeOrder();
+    });
+
+    async function submitOrder() {
+      var p     = PRODUCTS.find(function(x){ return x.id === currentProductId; });
+      var name  = document.getElementById('inp-name').value.trim();
+      var phone = document.getElementById('inp-phone').value.trim();
+      var qty   = parseInt(document.getElementById('inp-qty').value);
+      var stock = getQty(currentProductId);
+
+      if (!name)         { alert('Пожалуйста, введите ваше имя'); return; }
+      if (!phone)        { alert('Пожалуйста, введите номер телефона'); return; }
+      if (qty > stock)   { alert('Доступно только ' + stock + ' шт'); return; }
+
+      var text =
+        '🚗 Новый заказ!\n\n' +
+        '🛞 Товар: ' + p.name + '\n' +
+        '📦 Количество: ' + qty + ' шт\n' +
+        '👤 Имя: ' + name + '\n' +
+        '📞 Телефон: ' + phone;
+
+      var btn = document.getElementById('btn-submit');
+      btn.textContent = 'Отправка...';
+      btn.disabled = true;
+
+      try {
+        var resp = await fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: TG_CHAT, text: text })
+        });
+        var data = await resp.json();
+        if (data.ok) {
+          document.getElementById('order-form').style.display = 'none';
+          document.getElementById('order-success').style.display = '';
+          setTimeout(closeOrder, 3000);
+        } else {
+          alert('Ошибка: ' + (data.description || 'неизвестная ошибка'));
+        }
+      } catch(e) {
+        alert('Ошибка сети. Попробуйте ещё раз.');
+      }
+
+      btn.textContent = '📤 Отправить заказ';
+      btn.disabled = false;
+    }
+
+    // ─── АДМИН ─────────────────────────────────────────────────
+    function openAdminLogin() {
+      document.getElementById('inp-admin-pass').value = '';
+      document.getElementById('admin-pass-error').style.display = 'none';
+      document.getElementById('admin-login-overlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function(){ document.getElementById('inp-admin-pass').focus(); }, 100);
+    }
+
+    function closeAdmin() {
+      document.getElementById('admin-login-overlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function checkAdminPass() {
+      var pass = document.getElementById('inp-admin-pass').value;
+      if (pass === ADMIN_PASS) {
+        document.getElementById('admin-login-overlay').classList.remove('active');
+        openAdminPanel();
+      } else {
+        document.getElementById('admin-pass-error').style.display = 'block';
+        document.getElementById('inp-admin-pass').value = '';
+        document.getElementById('inp-admin-pass').focus();
+      }
+    }
+
+    function openAdminPanel() {
+      var stock = loadStock();
+      var grid  = document.getElementById('admin-grid');
+
+      grid.innerHTML = PRODUCTS.map(function(p) {
+        var qty = (stock[p.id] !== undefined) ? stock[p.id] : 10;
+        return '<div class="admin-row" id="admin-row-' + p.id + '">' +
+          '<div class="admin-row-name">' + p.name + '</div>' +
+          '<input class="admin-qty-input" type="number" min="0" max="9999" value="' + qty + '" id="admin-qty-' + p.id + '" />' +
+          '<button class="btn-save-row" onclick="saveOneStock(\'' + p.id + '\')">Сохранить</button>' +
+        '</div>';
+      }).join('');
+
+      document.getElementById('admin-panel-overlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function saveOneStock(id) {
+      var val   = parseInt(document.getElementById('admin-qty-' + id).value) || 0;
+      var stock = loadStock();
+      stock[id] = val;
+      saveStock(stock);
+      renderProducts();
+
+      // Показать "✓ Сохранено"
+      var btn = document.querySelector('#admin-row-' + id + ' .btn-save-row');
+      btn.textContent = '✓ Сохранено';
+      btn.style.background = '#0a7d4a';
+      btn.style.color = '#fff';
+      setTimeout(function(){
+        btn.textContent = 'Сохранить';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 1500);
+    }
+
+    function saveAllStock() {
+      var stock = loadStock();
+      PRODUCTS.forEach(function(p) {
+        var input = document.getElementById('admin-qty-' + p.id);
+        if (input) stock[p.id] = parseInt(input.value) || 0;
+      });
+      saveStock(stock);
+      renderProducts();
+
+      var btn = document.querySelector('#admin-panel-overlay .btn-primary');
+      btn.textContent = '✓ Всё сохранено!';
+      btn.style.background = '#0a7d4a';
+      btn.style.color = '#fff';
+      setTimeout(function(){
+        btn.textContent = '💾 Сохранить всё';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 2000);
+    }
+
+    // ─── INIT ──────────────────────────────────────────────────
+    renderProducts();
+  </script>
+
+</body>
+</html>
